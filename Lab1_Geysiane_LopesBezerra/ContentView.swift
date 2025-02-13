@@ -80,6 +80,13 @@ struct ContentView: View {
     func checkAnswer(isPrime: Bool) {
         isCorrect = isPrime == isPrimeNumber(n: number)
     }
+    
+    func startTimer() {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
+            number = Int.random(in: 1...100)
+        }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
