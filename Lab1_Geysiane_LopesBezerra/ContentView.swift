@@ -1,3 +1,10 @@
+//
+//  ContentView.swift
+//  Lab1_Geysiane_LopesBezerra
+//
+//  Created by Geysiane Lopes on 2025-02-13.
+//
+
 import SwiftUI
 import AVFoundation
 import AudioToolbox
@@ -48,13 +55,20 @@ struct ContentView: View {
                 .padding()
             }
             
+            Spacer()
+            
+            if let isCorrect = isCorrect {
+                Image(systemName: isCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
+                    .foregroundColor(isCorrect ? .green : .red)
+                    .font(.system(size: 80))
+                    .padding()
+            }
         }
     }
-
+    
     func isPrimeNumber(n: Int) -> Bool {
         if n < 2 { return false }
         if n == 2 { return true }
-        
         if n % 2 == 0 { return false }
         
         for i in stride(from: 3, through: Int(Double(n).squareRoot()), by: 2) {
@@ -62,7 +76,7 @@ struct ContentView: View {
         }
         return true
     }
-
+    
     func checkAnswer(isPrime: Bool) {
         isCorrect = isPrime == isPrimeNumber(n: number)
     }
