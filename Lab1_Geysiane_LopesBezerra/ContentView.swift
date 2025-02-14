@@ -17,6 +17,8 @@ struct ContentView: View {
     @State private var attempts = 0
     @State private var timer: Timer?
     @State private var showResults = false
+    @State private var showSkipAlert = false
+
     
     var body: some View {
         VStack {
@@ -68,7 +70,7 @@ struct ContentView: View {
             
             // Score Display
             HStack {
-                Text("\(correctAnswers) | \(wrongAnswers)")
+                Text("✅ \(correctAnswers) | ❌ \(wrongAnswers)")
                     .font(.headline)
                     .bold()
                     .padding()
