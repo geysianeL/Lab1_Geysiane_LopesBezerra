@@ -128,7 +128,9 @@ struct ContentView: View {
         attempts += 1
 
         if attempts >= 10 {
-            showResults = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                showResults = true
+            }
             return
         }
 
