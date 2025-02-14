@@ -16,8 +16,8 @@ struct ContentView: View {
     @State private var wrongAnswers = 0
     @State private var attempts = 0
     @State private var timer: Timer?
-    @State private var showResults = true
-    @State private var showSkipAlert = true
+    @State private var showResults = false
+    @State private var showSkipAlert = false
 
     
     var body: some View {
