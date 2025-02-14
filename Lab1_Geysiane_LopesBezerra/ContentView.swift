@@ -76,6 +76,16 @@ struct ContentView: View {
                     .padding()
                 Spacer()
             }
+            
+            Button("Skip") {
+                showSkipAlert = true
+            }
+            .alert("Skip this number?", isPresented: $showSkipAlert) {
+                Button("Yes") { generateNewNumber() }
+                Button("Cancel", role: .cancel) { }
+            }
+            .padding()
+
 
             Spacer()
         }
