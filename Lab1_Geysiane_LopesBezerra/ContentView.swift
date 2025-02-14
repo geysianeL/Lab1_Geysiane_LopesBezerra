@@ -137,6 +137,7 @@ struct ContentView: View {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             generateNewNumber()
+            startTimer()
         }
     }
     
