@@ -143,12 +143,21 @@ struct ContentView: View {
     func startTimer() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
-            wrongAnswers += 1
-            attempts += 1
-            generateNewNumber()
+            if isCorrect == nil {
+                wrongAnswers += 1
+                attempts += 1
+
+                if attempts >= 10 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        showResults = true
+                    }
+                } else {
+                    generateNewNumber()
+                    startTimer()
+                }
+            }
         }
     }
-    
     func resetGame() {
         correctAnswers = 0
         wrongAnswers = 0
