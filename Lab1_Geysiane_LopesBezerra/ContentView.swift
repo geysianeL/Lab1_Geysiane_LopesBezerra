@@ -95,10 +95,11 @@ struct ContentView: View {
         .alert(isPresented: $showResults) {
             Alert(
                 title: Text("Game Over!"),
-                message: Text("Correct: \(correctAnswers)\nWrong: \(wrongAnswers)"),
+                message: Text("✅ Correct: \(correctAnswers)\n❌ Wrong: \(wrongAnswers)"),
                 dismissButton: .default(Text("OK"), action: resetGame)
             )
         }
+
     }
 
     func isPrimeNumber(n: Int) -> Bool {
