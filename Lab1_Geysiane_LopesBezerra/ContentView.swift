@@ -78,6 +78,7 @@ struct ContentView: View {
     }
     
     func checkAnswer(isPrime: Bool) {
+        timer?.invalidate()
         isCorrect = isPrime == isPrimeNumber(n: number)
     }
     
