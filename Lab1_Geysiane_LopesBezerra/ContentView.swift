@@ -79,18 +79,27 @@ struct ContentView: View {
     
     func checkAnswer(isPrime: Bool) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.number = Int.random(in: 1...100)
+            var newNumber: Int
+            repeat {
+                newNumber = Int.random(in: 1...100)
+            } while newNumber == number
+            number = newNumber
+
             self.isCorrect = nil
             self.startTimer()
         }
-        
     }
     
     func startTimer() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
+            var newNumber: Int
+            repeat {
+                newNumber = Int.random(in: 1...100)
+            } while newNumber == number
+            number = newNumber
+
             wrongAnswers += 1
-            number = Int.random(in: 1...100)
         }
     }
 }
