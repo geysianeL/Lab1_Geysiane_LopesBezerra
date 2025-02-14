@@ -84,6 +84,7 @@ struct ContentView: View {
     func startTimer() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
+            wrongAnswers += 1
             number = Int.random(in: 1...100)
         }
     }
