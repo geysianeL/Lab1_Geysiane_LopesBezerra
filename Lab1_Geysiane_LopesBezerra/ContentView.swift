@@ -78,8 +78,12 @@ struct ContentView: View {
     }
     
     func checkAnswer(isPrime: Bool) {
-        timer?.invalidate()
-        isCorrect = isPrime == isPrimeNumber(n: number)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.number = Int.random(in: 1...100)
+            self.isCorrect = nil
+            self.startTimer()
+        }
+        
     }
     
     func startTimer() {
