@@ -57,14 +57,16 @@ struct ContentView: View {
             Spacer()
             
             if let isCorrect = isCorrect {
-                Image(systemName: isCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
+                Text(isCorrect ? "Correct!" : "Wrong!")
+                    .font(.title)
+                    .bold()
                     .foregroundColor(isCorrect ? .green : .red)
-                    .font(.system(size: 80))
                     .padding()
             }
             
             Spacer()
             
+            // Score Display
             HStack {
                 Text("\(correctAnswers) | \(wrongAnswers)")
                     .font(.headline)
@@ -99,35 +101,36 @@ struct ContentView: View {
     }
 
     func checkAnswer(isPrime: Bool) {
+        timer?.invalidate()
+
+        let correct = isPrime == isPrimeNumber(n: number)
+        isCorrect = correct
+
+        if correct {
+            correctAnswers += 1
+        } else {
+            wrongAnswers += 1
+        }
+
         attempts += 1
-        
+
         if attempts >= 10 {
             showResults = true
             return
         }
+
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            var newNumber: Int
-            repeat {
-                newNumber = Int.random(in: 1...100)
-            } while newNumber == number
-            number = newNumber
-            
-            self.isCorrect = nil
-            self.startTimer()
+            generateNewNumber()
         }
     }
     
     func startTimer() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
-            var newNumber: Int
-            repeat {
-                newNumber = Int.random(in: 1...100)
-            } while newNumber == number
-            number = newNumber
-            
             wrongAnswers += 1
+            attempts += 1
+            generateNewNumber()
         }
     }
     
@@ -135,7 +138,15 @@ struct ContentView: View {
         correctAnswers = 0
         wrongAnswers = 0
         attempts = 0
-        number = Int.random(in: 1...100)
+        generateNewNumber()
+    }
+
+    func generateNewNumber() {
+        var newNumber: Int
+        repeat {
+            newNumber = Int.random(in: 1...100)
+        } while newNumber == number
+        number = newNumber
         isCorrect = nil
         startTimer()
     }
