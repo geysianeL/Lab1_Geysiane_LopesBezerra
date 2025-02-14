@@ -16,7 +16,6 @@ struct ContentView: View {
     @State private var wrongAnswers = 0
     @State private var attempts = 0
     @State private var timer: Timer?
-    @State private var showSkipAlert = false
     @State private var showResults = false
     
     var body: some View {
@@ -63,9 +62,31 @@ struct ContentView: View {
                     .font(.system(size: 80))
                     .padding()
             }
+            
+            Spacer()
+            
+            HStack {
+                Text("\(correctAnswers) | \(wrongAnswers)")
+                    .font(.headline)
+                    .bold()
+                    .padding()
+                Spacer()
+            }
+
+            Spacer()
+        }
+        .onAppear {
+            startTimer()
+        }
+        .alert(isPresented: $showResults) {
+            Alert(
+                title: Text("Game Over!"),
+                message: Text("Correct: \(correctAnswers)\nWrong: \(wrongAnswers)"),
+                dismissButton: .default(Text("OK"), action: resetGame)
+            )
         }
     }
-    
+
     func isPrimeNumber(n: Int) -> Bool {
         if n < 2 { return false }
         if n == 2 { return true }
@@ -76,15 +97,22 @@ struct ContentView: View {
         }
         return true
     }
-    
+
     func checkAnswer(isPrime: Bool) {
+        attempts += 1
+        
+        if attempts >= 10 {
+            showResults = true
+            return
+        }
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             var newNumber: Int
             repeat {
                 newNumber = Int.random(in: 1...100)
             } while newNumber == number
             number = newNumber
-
+            
             self.isCorrect = nil
             self.startTimer()
         }
@@ -98,9 +126,18 @@ struct ContentView: View {
                 newNumber = Int.random(in: 1...100)
             } while newNumber == number
             number = newNumber
-
+            
             wrongAnswers += 1
         }
+    }
+    
+    func resetGame() {
+        correctAnswers = 0
+        wrongAnswers = 0
+        attempts = 0
+        number = Int.random(in: 1...100)
+        isCorrect = nil
+        startTimer()
     }
 }
 
